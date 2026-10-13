@@ -346,6 +346,84 @@ a:hover {
   margin-top: 12px;
 }
 
+/* Public landing page navigation and section layouts */
+.public-header {
+  gap: 18px;
+}
+
+.public-brand {
+  flex: 0 0 auto;
+}
+
+.public-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  min-width: 0;
+}
+
+.public-nav-link {
+  border: 0;
+  padding: 8px 0;
+  background: transparent;
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.public-nav-link:hover,
+.public-nav-link.active {
+  color: var(--primary);
+}
+
+.public-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+
+.public-menu-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.home-section {
+  width: 100%;
+}
+
+.home-section-heading {
+  gap: 16px;
+}
+
+.home-section-heading > div {
+  min-width: 0;
+}
+
+.home-split-grid > *,
+.home-benefits-grid > *,
+.home-footer-grid > * {
+  min-width: 0;
+}
+
+.home-footer-grid {
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+}
+
 /* SaaS Card Component */
 .card {
   background-color: var(--bg-card);
@@ -940,5 +1018,160 @@ a:hover {
   .page-workspace {
     padding-right: 10px;
     padding-left: 10px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .public-header {
+    gap: 12px;
+    padding-right: 3% !important;
+    padding-left: 3% !important;
+  }
+  .public-nav {
+    gap: 13px;
+  }
+  .public-nav-link {
+    font-size: 0.84rem;
+  }
+  .public-actions .btn {
+    padding: 7px 9px;
+    font-size: 0.78rem;
+  }
+  .home-footer-grid {
+    grid-template-columns: 2fr 1fr 1fr !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .public-header {
+    height: auto !important;
+    min-height: 68px;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    padding: 12px 16px !important;
+    gap: 8px 12px;
+  }
+  .public-brand span {
+    font-size: 1.22rem !important;
+  }
+  .public-menu-toggle {
+    display: inline-flex;
+  }
+  .public-nav,
+  .public-actions {
+    display: none;
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+  .public-header.menu-open .public-nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    padding-top: 8px;
+  }
+  .public-header.menu-open .public-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding-top: 4px;
+  }
+  .public-nav-link {
+    width: 100%;
+    padding: 11px 12px;
+    border-radius: 10px;
+    background: #F8FAFC;
+    text-align: left;
+    white-space: normal;
+  }
+  .public-nav-link:hover,
+  .public-nav-link.active {
+    background: #EEF2FF;
+  }
+  .public-actions .btn {
+    min-height: 42px;
+    padding: 9px 10px;
+    font-size: 0.82rem;
+    white-space: normal;
+  }
+  .public-actions .btn:last-child {
+    grid-column: 1 / -1;
+  }
+  .home-hero {
+    padding: 54px 18px !important;
+  }
+  .home-hero-title {
+    font-size: clamp(2rem, 7vw, 3rem) !important;
+  }
+  .home-section {
+    padding: 42px 18px !important;
+  }
+  .home-section > .card {
+    padding: 24px !important;
+  }
+  .home-split-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 24px !important;
+  }
+  .home-footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 28px !important;
+  }
+  .home-footer-grid > div:first-child {
+    grid-column: 1 / -1;
+  }
+  .home-section-heading {
+    align-items: flex-start !important;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 520px) {
+  .home-hero {
+    padding: 42px 14px !important;
+  }
+  .home-hero-title {
+    font-size: clamp(1.85rem, 9vw, 2.45rem) !important;
+  }
+  .home-hero > div > span {
+    display: inline-flex;
+    justify-content: center;
+    max-width: 100%;
+    white-space: normal;
+    line-height: 1.4;
+  }
+  .home-hero-actions {
+    gap: 10px !important;
+  }
+  .home-hero-actions > .btn {
+    width: 100%;
+    max-width: 360px;
+    min-height: 46px;
+    padding: 11px 14px !important;
+  }
+  .home-section {
+    padding: 34px 14px !important;
+  }
+  .home-section > .card {
+    padding: 18px !important;
+  }
+  .home-section h2 {
+    font-size: 1.5rem !important;
+    line-height: 1.25;
+  }
+  .home-section-heading > .btn {
+    width: 100%;
+  }
+  .home-benefits-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .home-footer-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 24px !important;
+  }
+  .home-footer-grid > div:first-child {
+    grid-column: auto;
+  }
+  footer {
+    padding: 36px 18px 24px !important;
   }
 }

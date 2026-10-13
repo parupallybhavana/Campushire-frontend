@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { 
   Sparkles, Building2, Briefcase, Code2, ArrowRight, ShieldCheck, 
   CheckCircle2, Users, Award, TrendingUp, HelpCircle, BookOpen, 
-  Mail, Phone, MapPin, User, LogIn
+  Mail, Phone, MapPin, User, Menu, X
 } from 'lucide-react';
 
 function Home() {
@@ -15,6 +15,7 @@ function Home() {
   const [latestDrives, setLatestDrives] = useState([]);
   const [loadingCompanies, setLoadingCompanies] = useState(true);
   const [loadingDrives, setLoadingDrives] = useState(true);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     axiosInstance.get('/companies')
@@ -60,13 +61,13 @@ function Home() {
   return (
     <div style={{ backgroundColor: 'var(--bg-main)', minHeight: '100vh' }}>
       {/* 1. Public Navigation Bar */}
-      <header style={{
+      <header className={`public-header ${mobileMenuOpen ? 'menu-open' : ''}`} style={{
         height: '75px', backgroundColor: '#FFFFFF', borderBottom: '1px solid var(--border-color)',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 5%',
         position: 'sticky', top: 0, zIndex: 100, boxShadow: 'var(--shadow-sm)'
       }}>
         {/* Brand Logo */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => navigate('/')}>
+        <div className="public-brand" style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => navigate('/')}>
           <div style={{ width: '38px', height: '38px', borderRadius: '10px', background: 'linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Sparkles size={22} />
           </div>
@@ -75,30 +76,40 @@ function Home() {
           </span>
         </div>
 
+        <button
+          type="button"
+          className="public-menu-toggle"
+          aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          aria-expanded={mobileMenuOpen}
+          onClick={() => setMobileMenuOpen(open => !open)}
+        >
+          {mobileMenuOpen ? <X size={21} aria-hidden="true" /> : <Menu size={21} aria-hidden="true" />}
+        </button>
+
         {/* Navigation Links */}
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '24px' }}>
-          <Link to="/" style={{ color: 'var(--primary)', fontWeight: 700, fontSize: '0.95rem' }}>Home</Link>
-          <button onClick={handleCompaniesClick} style={{ background: 'none', border: 'none', color: 'var(--text-main)', fontWeight: 600, fontSize: '0.95rem', cursor: 'pointer' }}>Companies</button>
-          <button onClick={handleDriveClick} style={{ background: 'none', border: 'none', color: 'var(--text-main)', fontWeight: 600, fontSize: '0.95rem', cursor: 'pointer' }}>Placement Drives</button>
-          <button onClick={handlePracticeClick} style={{ background: 'none', border: 'none', color: 'var(--text-main)', fontWeight: 600, fontSize: '0.95rem', cursor: 'pointer' }}>Practice Zone</button>
+        <nav className="public-nav">
+          <Link className="public-nav-link active" to="/" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+          <button className="public-nav-link" onClick={() => { setMobileMenuOpen(false); handleCompaniesClick(); }}>Companies</button>
+          <button className="public-nav-link" onClick={() => { setMobileMenuOpen(false); handleDriveClick(); }}>Placement Drives</button>
+          <button className="public-nav-link" onClick={() => { setMobileMenuOpen(false); handlePracticeClick(); }}>Practice Zone</button>
         </nav>
 
         {/* Action Buttons */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <button className="btn btn-outline btn-sm" onClick={() => navigate('/login')}>Student Login</button>
-          <button className="btn btn-secondary btn-sm" onClick={() => navigate('/admin/login')}>Admin Login</button>
-          <button className="btn btn-primary btn-sm" onClick={() => navigate('/register')}>Register</button>
+        <div className="public-actions">
+          <button className="btn btn-outline btn-sm" onClick={() => { setMobileMenuOpen(false); navigate('/login'); }}>Student Login</button>
+          <button className="btn btn-secondary btn-sm" onClick={() => { setMobileMenuOpen(false); navigate('/admin/login'); }}>Admin Login</button>
+          <button className="btn btn-primary btn-sm" onClick={() => { setMobileMenuOpen(false); navigate('/register'); }}>Register</button>
         </div>
       </header>
 
       {/* 2. Hero Section */}
-      <section style={{ padding: '80px 5%', textAlign: 'center', background: 'linear-gradient(180deg, #FFFFFF 0%, #F5F5FA 100%)' }}>
+      <section className="home-hero" style={{ padding: '80px 5%', textAlign: 'center', background: 'linear-gradient(180deg, #FFFFFF 0%, #F5F5FA 100%)' }}>
         <div style={{ maxWidth: '850px', margin: '0 auto' }}>
           <span className="badge badge-shortlisted" style={{ padding: '8px 18px', fontSize: '0.85rem', marginBottom: '20px' }}>
             <Sparkles size={16} /> Intelligent Placement & Career Development Platform
           </span>
 
-          <h1 style={{ fontSize: '3.2rem', fontWeight: 800, lineHeight: 1.15, color: 'var(--text-main)', margin: '16px 0' }}>
+          <h1 className="home-hero-title" style={{ fontSize: '3.2rem', fontWeight: 800, lineHeight: 1.15, color: 'var(--text-main)', margin: '16px 0' }}>
             Discover. Prepare. Apply. <span style={{ background: 'linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Get Hired.</span>
           </h1>
 
@@ -106,7 +117,7 @@ function Home() {
             Your placement journey starts here. Explore companies, discover job opportunities, practice interview questions, and track your applications in one place.
           </p>
 
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <div className="home-hero-actions" style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <button className="btn btn-primary btn-lg" style={{ padding: '14px 28px', fontSize: '1rem' }} onClick={handleDriveClick}>
               Explore Placement Drives <ArrowRight size={18} />
             </button>
@@ -124,9 +135,9 @@ function Home() {
       </section>
 
       {/* 3. About CampusHire */}
-      <section style={{ padding: '60px 5%', maxWidth: '1200px', margin: '0 auto' }}>
+      <section className="home-section" style={{ padding: '60px 5%', maxWidth: '1200px', margin: '0 auto' }}>
         <div className="card" style={{ padding: '40px', background: '#FFFFFF', borderRadius: 'var(--radius-lg)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', alignItems: 'center' }}>
+          <div className="home-split-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', alignItems: 'center' }}>
             <div>
               <span className="badge badge-tag" style={{ color: 'var(--primary)', marginBottom: '12px' }}>About CampusHire</span>
               <h2 style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '16px' }}>
@@ -135,7 +146,7 @@ function Home() {
               <p style={{ color: 'var(--text-muted)', lineHeight: 1.7, marginBottom: '20px' }}>
                 CampusHire bridges the gap between ambitious students and top corporate recruiters. Our platform simplifies drive eligibility verification, single-click application tracking, technical skill evaluation, and recruitment status updates.
               </p>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+              <div className="home-benefits-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <CheckCircle2 color="var(--success)" size={20} />
                   <span style={{ fontWeight: 600, fontSize: '0.9rem' }}>Real-time CGPA Eligibility</span>
@@ -166,7 +177,7 @@ function Home() {
       </section>
 
       {/* 4. How It Works */}
-      <section style={{ padding: '60px 5%', maxWidth: '1200px', margin: '0 auto' }}>
+      <section className="home-section" style={{ padding: '60px 5%', maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h2 style={{ fontSize: '2rem', fontWeight: 800 }}>How It Works</h2>
           <p style={{ color: 'var(--text-muted)' }}>5 simple steps to launch your campus placement career</p>
@@ -192,8 +203,8 @@ function Home() {
       </section>
 
       {/* 5. Explore Companies */}
-      <section style={{ padding: '60px 5%', maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+      <section className="home-section" style={{ padding: '60px 5%', maxWidth: '1200px', margin: '0 auto' }}>
+        <div className="home-section-heading" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
           <div>
             <h2 style={{ fontSize: '2rem', fontWeight: 800 }}>Explore Companies</h2>
             <p style={{ color: 'var(--text-muted)' }}>Partner corporations organizing placement drives</p>
@@ -235,8 +246,8 @@ function Home() {
       </section>
 
       {/* 6. Latest Placement Drives */}
-      <section style={{ padding: '60px 5%', maxWidth: '1200px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
+      <section className="home-section" style={{ padding: '60px 5%', maxWidth: '1200px', margin: '0 auto' }}>
+        <div className="home-section-heading" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
           <div>
             <h2 style={{ fontSize: '2rem', fontWeight: 800 }}>Latest Placement Drives</h2>
             <p style={{ color: 'var(--text-muted)' }}>Active recruitment postings for eligible students</p>
@@ -276,9 +287,9 @@ function Home() {
       </section>
 
       {/* 7. Practice Zone Introduction */}
-      <section style={{ padding: '60px 5%', maxWidth: '1200px', margin: '0 auto' }}>
+      <section className="home-section" style={{ padding: '60px 5%', maxWidth: '1200px', margin: '0 auto' }}>
         <div className="card" style={{ padding: '40px', background: 'linear-gradient(135deg, #1E293B 0%, #0F172A 100%)', color: '#FFF', borderRadius: 'var(--radius-lg)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', alignItems: 'center' }}>
+          <div className="home-split-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px', alignItems: 'center' }}>
             <div>
               <span className="badge" style={{ background: 'rgba(139,92,246,0.3)', color: '#C084FC', marginBottom: '12px' }}>
                 <BookOpen size={14} /> Practice Zone
@@ -324,7 +335,7 @@ function Home() {
       </section>
 
       {/* 8. Why Choose CampusHire? */}
-      <section style={{ padding: '60px 5%', maxWidth: '1200px', margin: '0 auto' }}>
+      <section className="home-section" style={{ padding: '60px 5%', maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <h2 style={{ fontSize: '2rem', fontWeight: 800 }}>Why Choose CampusHire?</h2>
           <p style={{ color: 'var(--text-muted)' }}>Purpose-built placement management for students and placement officers</p>
@@ -365,7 +376,7 @@ function Home() {
 
       {/* 9. Public Footer */}
       <footer style={{ backgroundColor: '#1E293B', color: '#94A3B8', padding: '50px 5% 30px 5%', borderTop: '1px solid #334155' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.5fr', gap: '40px', marginBottom: '40px' }}>
+        <div className="home-footer-grid" style={{ maxWidth: '1200px', margin: '0 auto', display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 1.5fr', gap: '40px', marginBottom: '40px' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '16px' }}>
               <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%)', color: '#FFF', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
