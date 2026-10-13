@@ -22,6 +22,14 @@ function AppLayout({ children }) {
         mobileOpen={mobileOpen}
         closeMobile={() => setMobileOpen(false)}
       />
+      {mobileOpen && (
+        <button
+          className="sidebar-backdrop"
+          type="button"
+          aria-label="Close navigation menu"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
       <div className={`main-wrapper ${collapsed ? 'expanded' : ''}`}>
         <Topbar toggleMobileSidebar={toggleMobileSidebar} />
         <main className="page-workspace">

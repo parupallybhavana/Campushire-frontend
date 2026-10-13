@@ -9,17 +9,15 @@ import {
   Code2,
   Video,
   FileText,
-  Target,
-  CalendarCheck,
   Sparkles,
   Bell,
   User,
-  Settings,
   LogOut,
   ChevronLeft,
   ChevronRight,
-  ShieldCheck,
-  HelpCircle
+  X,
+  CalendarDays,
+  Target as TargetIcon
 } from 'lucide-react';
 
 function Sidebar({ collapsed, toggleSidebar, mobileOpen, closeMobile }) {
@@ -60,11 +58,19 @@ function Sidebar({ collapsed, toggleSidebar, mobileOpen, closeMobile }) {
         >
           {collapsed ? <ChevronRight size={18} /> : <ChevronLeft size={18} />}
         </button>
+        <button
+          className="icon-btn sidebar-close-mobile"
+          onClick={closeMobile}
+          aria-label="Close navigation menu"
+        >
+          <X size={20} />
+        </button>
       </div>
 
       <div className="sidebar-nav">
         {isStudent && (
           <>
+            <div className="sidebar-section-label">Workspace</div>
             <NavLink to="/student/dashboard" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={closeMobile}>
               <LayoutDashboard size={20} />
               {!collapsed && <span>Dashboard</span>}
@@ -90,6 +96,29 @@ function Sidebar({ collapsed, toggleSidebar, mobileOpen, closeMobile }) {
               {!collapsed && <span>Practice Zone</span>}
             </NavLink>
 
+            <div className="sidebar-section-label">Career Tools</div>
+            <NavLink to="/student/mock-interviews" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={closeMobile}>
+              <Video size={20} />
+              {!collapsed && <span>Mock Interviews</span>}
+            </NavLink>
+            <NavLink to="/student/resume" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={closeMobile}>
+              <FileText size={20} />
+              {!collapsed && <span>Resume Analyzer</span>}
+            </NavLink>
+            <NavLink to="/student/skill-gap" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={closeMobile}>
+              <TargetIcon size={20} />
+              {!collapsed && <span>Skill Gap Analyzer</span>}
+            </NavLink>
+            <NavLink to="/student/study-plan" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={closeMobile}>
+              <CalendarDays size={20} />
+              {!collapsed && <span>Study Planner</span>}
+            </NavLink>
+            <NavLink to="/student/ai-assistant" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={closeMobile}>
+              <Sparkles size={20} />
+              {!collapsed && <span>AI Assistant</span>}
+            </NavLink>
+
+            <div className="sidebar-section-label">Account</div>
             <NavLink to="/student/notifications" className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={closeMobile}>
               <Bell size={20} />
               {!collapsed && <span>Notifications</span>}

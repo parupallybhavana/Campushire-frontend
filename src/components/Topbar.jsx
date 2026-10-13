@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axiosInstance from '../api/axiosInstance';
-import { Search, Bell, User, LogOut, ChevronDown, Sparkles } from 'lucide-react';
+import { Search, Bell, User, LogOut, ChevronDown, Menu } from 'lucide-react';
 
 function Topbar({ toggleMobileSidebar }) {
   const { user, logout } = useAuth();
@@ -32,6 +32,7 @@ function Topbar({ toggleMobileSidebar }) {
     if (path.includes('/student/companies')) return 'Explore Companies';
     if (path.includes('/student/jobs')) return 'Placement Drives';
     if (path.includes('/student/applications')) return 'My Applications';
+    if (path.includes('/student/notifications')) return 'Notifications';
     if (path.includes('/student/practice')) return 'Practice Zone';
     if (path.includes('/student/mock-interviews')) return 'Mock Interviews';
     if (path.includes('/student/resume')) return 'Resume Analyzer';
@@ -57,6 +58,15 @@ function Topbar({ toggleMobileSidebar }) {
   return (
     <header className="topbar">
       <div className="topbar-left">
+        <button
+          className="icon-btn mobile-menu-toggle"
+          type="button"
+          onClick={toggleMobileSidebar}
+          aria-label="Open navigation menu"
+          aria-expanded={undefined}
+        >
+          <Menu size={21} />
+        </button>
         <div className="breadcrumbs">
           <span style={{ fontWeight: 600, color: '#94A3B8' }}>CampusHire</span>
           <span>/</span>
@@ -102,23 +112,24 @@ function Topbar({ toggleMobileSidebar }) {
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                 <h4 style={{ fontSize: '0.95rem', fontWeight: 700, margin: 0 }}>Recent Notifications</h4>
-                <span
-                  style={{ fontSize: '0.75rem', color: '#4F46E5', cursor: 'pointer', fontWeight: 600 }}
-                  onClick={() => navigate('/student/notifications')}
+                <button
+                  type="button"
+                  className="notification-view-all"
+                  onClick={() => { setShowNotifications(false); navigate(user?.role === 'ROLE_ADMIN' ? '/admin/notifications' : '/student/notifications'); }}
                 >
                   View All
-                </span>
+                </button>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                <div style={{ padding: '8px', borderRadius: '8px', backgroundColor: '#EEF2FF', fontSize: '0.825rem' }}>
-                  <strong style={{ color: '#4F46E5' }}>New Placement Drive!</strong>
-                  <p style={{ margin: 0, color: '#64748B' }}>Google Cloud SDE-1 placement drive is now live.</p>
-                </div>
-                <div style={{ padding: '8px', borderRadius: '8px', backgroundColor: '#F8FAFC', fontSize: '0.825rem' }}>
-                  <strong style={{ color: '#10B981' }}>Practice Milestone</strong>
-                  <p style={{ margin: 0, color: '#64748B' }}>You unlocked the 50 XP Practice Ace badge!</p>
-                </div>
-              </div>
+              <p style={{ margin: 0, color: '#64748B', fontSize: '0.85rem' }}>
+                {unreadCount > 0 ? `You have ${unreadCount} unread notification${unreadCount === 1 ? '' : 's'}.` : 'You’re all caught up.'}
+              </p>
+              <button
+                type="button"
+                className="btn btn-primary notification-open-all"
+                onClick={() => { setShowNotifications(false); navigate(user?.role === 'ROLE_ADMIN' ? '/admin/notifications' : '/student/notifications'); }}
+              >
+                Open notifications
+              </button>
             </div>
           )}
         </div>

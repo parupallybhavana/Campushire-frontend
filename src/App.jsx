@@ -65,6 +65,11 @@ function App() {
             <Route path="/student/practice/technical" element={<TechnicalPrep />} />
             <Route path="/student/practice/hr" element={<HrPrep />} />
             <Route path="/student/practice/mock-test" element={<MockPlacementTest />} />
+            <Route path="/student/mock-interviews" element={<MockInterviewRoom />} />
+            <Route path="/student/resume" element={<ResumeAnalyzer />} />
+            <Route path="/student/skill-gap" element={<SkillGapAnalyzer />} />
+            <Route path="/student/study-plan" element={<StudyPlanner />} />
+            <Route path="/student/ai-assistant" element={<AiPlacementAssistant />} />
             <Route path="/student/notifications" element={<NotificationsPage />} />
           </Route>
 
