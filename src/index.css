@@ -885,6 +885,18 @@ a:hover {
   .card {
     padding: 17px;
   }
+  .card-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .card-title {
+    min-width: 0;
+    line-height: 1.35;
+  }
+  .card-header > .btn {
+    flex-shrink: 0;
+  }
   .grid-5,
   .grid-dashboard,
   .grid-cards,
